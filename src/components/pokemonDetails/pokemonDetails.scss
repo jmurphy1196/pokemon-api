@@ -1,0 +1,23 @@
+.stat-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+p.side-para {
+  transition: 1s ease;
+  color: grey;
+  &:hover {
+    transform: scale(1.4);
+    color: black;
+    text-decoration: underline !important;
+  }
+}
+p.active {
+  text-decoration: underline !important;
+  color: black !important;
+}
