@@ -9,6 +9,8 @@ import AbilitiesDetails from "./AbilitiesDetails";
 import ItemsDetails from "./ItemsDetails";
 //games details
 import GamesDetails from "./GamesDetails";
+//add to favorites
+import AddFavorite from "../favorites/AddFavorite";
 import "./pokemonDetails.scss";
 
 //bootstrap
@@ -105,6 +107,9 @@ function PokemonDetails({
         )}
         {currentPage === "ITEMS" && <ItemsDetails items={held_items} />}
         {currentPage === "GAMES" && <GamesDetails games={games} />}
+      </Row>
+      <Row className="mt-5">
+        <AddFavorite />
       </Row>
     </React.Fragment>
   );

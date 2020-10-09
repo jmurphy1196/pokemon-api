@@ -4,14 +4,20 @@ import SearchResult from "../components/searchResults/SearchResults";
 //pokemondetails
 import PokemonDetails from "../components/pokemonDetails/PokemonDetails";
 import PokemonDetailsSide from "../components/pokemonDetails/PokemonDetailsSide";
+
 //list of all pokemon names
 import { pokemonNames } from "../util/pokemonNames";
 //calls api based off pokemon name
 import { getSearchResult } from "../util/getSearchResult";
+//react router location
+import { useLocation } from "react-router-dom";
+//add query
+import addQuery from "../util/addQuery";
 import "./home.scss";
 
 function Home(props) {
-  const { history, location } = props;
+  const location = useLocation();
+  const { history } = props;
   let searchParams = new URLSearchParams(location.search);
   let page = searchParams.get("page");
   let pokemon = props.match.params.pokemon;
@@ -29,20 +35,30 @@ function Home(props) {
     try {
       if (pokemon) {
         data = await getSearchResult(pokemon);
+
         if (!selectedDetails) {
           setSelectedDetails({ ...selectedDetails, ...data });
           setselected(pokemon);
           if (!page) {
             //if no page is selected from query ?page=stats
             setCurrentPage("STATS");
+            addQuery("page", "stats", location, history);
           } else {
             setCurrentPage(page.toUpperCase());
           }
         }
       } else {
         data = await getSearchResult("ditto"); //defaults to ditto if no pokemon has been chosen
+
         setSelectedDetails({ ...selectedDetails, ...data });
         setCurrentPage("STATS");
+
+        history.push(`/ditto`);
+        if (!page) {
+          addQuery("page", "stats", location, history);
+        } else {
+          addQuery("page", page, location, history);
+        }
       }
     } catch (err) {
       console.log(err);
@@ -91,8 +107,10 @@ function Home(props) {
                   ...data,
                 });
                 pokemon = selected.toLowerCase();
-                history.push(`/${pokemon}`);
+
                 setCurrentPage("STATS");
+                pokemon = selected.toLowerCase();
+                history.push(`/${pokemon}`);
               }}
               color="danger"
               style={{
