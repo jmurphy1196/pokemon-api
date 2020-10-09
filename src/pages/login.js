@@ -1,7 +1,7 @@
 import React from "react";
 
 function Login() {
-  return <React.Fragment></React.Fragment>;
+  return <p>hello from login</p>;
 }
 
 export default Login;

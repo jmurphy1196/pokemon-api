@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 //stats details
 import StatsDetails from "./StatsDetails";
+//types details
+import TypesDetails from "./TypesDetails";
+//ability details
+import AbilitiesDetails from "./AbilitiesDetails";
+//item details
+import ItemsDetails from "./ItemsDetails";
+//games details
+import GamesDetails from "./GamesDetails";
 import "./pokemonDetails.scss";
 
 //bootstrap
@@ -14,10 +22,14 @@ function PokemonDetails({
   weight,
   height,
   currentPage,
+  types,
+  abilities,
+  held_items,
+  games,
 }) {
   const [currentImage, setCurrentImage] = useState(null);
   currentImage === null ? (image = image) : (image = images[currentImage]);
-  console.log(images);
+  console.log(stats);
 
   return (
     <React.Fragment>
@@ -85,7 +97,15 @@ function PokemonDetails({
           <p>Weight: {weight / 10}kg</p>
         </Col>
       </Row>
-      <Row className="mt-5">{currentPage === "STATS" && <StatsDetails />}</Row>
+      <Row className="mt-5">
+        {currentPage === "STATS" && <StatsDetails stats={stats} />}
+        {currentPage === "TYPES" && <TypesDetails types={types} />}
+        {currentPage === "ABILITIES" && (
+          <AbilitiesDetails abilities={abilities} />
+        )}
+        {currentPage === "ITEMS" && <ItemsDetails items={held_items} />}
+        {currentPage === "GAMES" && <GamesDetails games={games} />}
+      </Row>
     </React.Fragment>
   );
 }

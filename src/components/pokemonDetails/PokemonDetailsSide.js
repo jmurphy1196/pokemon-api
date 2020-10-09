@@ -1,13 +1,30 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
+import { useLocation } from "react-router-dom";
+
 import "./pokemonDetails.scss";
 
-function PokemonDetailsSide({ currentPage, setCurrentPage }) {
+function PokemonDetailsSide({ currentPage, setCurrentPage, history }) {
+  const location = useLocation();
+  const addQuery = (key, value) => {
+    let pathname = location.pathname;
+    // returns path: '/app/books'
+    let searchParams = new URLSearchParams(location.search);
+    // returns the existing query string: '?type=fiction&author=fahid'
+    searchParams.set(key, value);
+    history.push({
+      pathname: pathname,
+      search: searchParams.toString(),
+    });
+  };
   return (
     <React.Fragment>
       <Row className="stat-row">
         <Col
-          onClick={() => setCurrentPage("STATS")}
+          onClick={() => {
+            addQuery("page", "stats");
+            setCurrentPage("STATS");
+          }}
           xs={12}
           style={{
             display: "flex",
@@ -23,7 +40,13 @@ function PokemonDetailsSide({ currentPage, setCurrentPage }) {
         </Col>
       </Row>
       <Row className="stat-row">
-        <Col onClick={() => setCurrentPage("TYPES")} xs={12}>
+        <Col
+          onClick={() => {
+            addQuery("page", "types");
+            setCurrentPage("TYPES");
+          }}
+          xs={12}
+        >
           {currentPage === "TYPES" ? (
             <p className="side-para text-center active ">TYPES</p>
           ) : (
@@ -32,7 +55,13 @@ function PokemonDetailsSide({ currentPage, setCurrentPage }) {
         </Col>
       </Row>
       <Row className="stat-row">
-        <Col onClick={() => setCurrentPage("ABILITIES")} xs={12}>
+        <Col
+          onClick={() => {
+            addQuery("page", "abilities");
+            setCurrentPage("ABILITIES");
+          }}
+          xs={12}
+        >
           {currentPage === "ABILITIES" ? (
             <p className="side-para text-center active ">ABILITIES</p>
           ) : (
@@ -41,7 +70,13 @@ function PokemonDetailsSide({ currentPage, setCurrentPage }) {
         </Col>
       </Row>
       <Row className="stat-row">
-        <Col onClick={() => setCurrentPage("ITEMS")} xs={12}>
+        <Col
+          onClick={() => {
+            addQuery("page", "items");
+            setCurrentPage("ITEMS");
+          }}
+          xs={12}
+        >
           {currentPage === "ITEMS" ? (
             <p className="side-para text-center active ">ITEMS</p>
           ) : (
@@ -50,7 +85,13 @@ function PokemonDetailsSide({ currentPage, setCurrentPage }) {
         </Col>
       </Row>
       <Row className="stat-row">
-        <Col onClick={() => setCurrentPage("GAMES")} xs={12}>
+        <Col
+          onClick={() => {
+            addQuery("page", "games");
+            setCurrentPage("GAMES");
+          }}
+          xs={12}
+        >
           {currentPage === "GAMES" ? (
             <p className="side-para text-center active ">GAMES</p>
           ) : (

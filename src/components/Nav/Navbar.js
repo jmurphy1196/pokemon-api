@@ -10,6 +10,14 @@ function Navbar() {
   let loginTimer;
   let delLoginTImer;
   const displayLoginBtn = () => {
+    console.log("running write");
+    if (loginTimer && delLoginTImer) {
+      clearInterval(loginTimer);
+      clearInterval(delLoginTImer);
+      loginTimer = null;
+      delLoginTImer = null;
+    }
+
     //  transform: translateX(-100px) rotate(360deg);
     let pokeBall = document.getElementById("poke-ball");
     let loginBtn = document.getElementById("login-btn");
@@ -21,24 +29,27 @@ function Navbar() {
     let text = "login";
     let i = 1;
     function writeText() {
-      if (!delLoginTImer) {
-        let text = "Login";
-
-        if (i > text.length) {
-          console.log("deleted");
-          clearInterval(loginTimer);
-        }
+      if (i > text.length) {
+        console.log("deleted write text");
+        clearInterval(loginTimer);
+        i = 1;
+      } else {
         loginBtn.innerHTML = text.slice(0, i);
         i++;
-      } else {
-        clearInterval(delLoginTImer);
-        delLoginTImer = null;
       }
     }
+
+    clearInterval(delLoginTImer);
+    clearInterval(loginTimer);
+    loginTimer = null;
+    delLoginTImer = null;
     loginTimer = setInterval(writeText, 150);
+
+    console.log("set interval");
   };
   const turnOffLoginBtn = () => {
     clearInterval(loginTimer);
+    loginTimer = null;
     let pokeBall = document.getElementById("poke-ball");
     let loginBtn = document.getElementById("login-btn");
     pokeBall.style.transform = "translateX(0) rotate(0)";
@@ -46,21 +57,19 @@ function Navbar() {
     let i = 0;
     let j = 0;
     function delText() {
-      if (!loginTimer) {
-        if (i > text.length) {
-          console.log("deleted");
-          clearInterval(delLoginTImer);
-        }
+      if (i < text.length + 1) {
         loginBtn.innerHTML = text.slice(i, text.length);
         i++;
       } else {
-        clearInterval(loginTimer);
-        loginTimer = null;
+        clearInterval(delLoginTImer);
       }
     }
 
+    clearInterval(loginTimer);
+    clearInterval(delLoginTImer);
+    delLoginTImer = null;
+    loginTimer = null;
     delLoginTImer = setInterval(delText, 125);
-    console.log(j);
   };
 
   return (
@@ -92,7 +101,7 @@ function Navbar() {
           </Link>
         </ul>
 
-        <ul className="navbar-nav ml-auto">
+        <ul className="navbar-nav ml-auto" onMouseLeave={turnOffLoginBtn}>
           <Link
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}

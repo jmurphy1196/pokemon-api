@@ -10,7 +10,13 @@ import { pokemonNames } from "../util/pokemonNames";
 import { getSearchResult } from "../util/getSearchResult";
 import "./home.scss";
 
-function Home() {
+function Home(props) {
+  const { history, location } = props;
+  let searchParams = new URLSearchParams(location.search);
+  let page = searchParams.get("page");
+  let pokemon = props.match.params.pokemon;
+  let data;
+  console.log(`this is the pokemon ${pokemon}`);
   const [searchResults, setsearchResults] = useState({
     search: null,
     displayResults: true,
@@ -19,28 +25,48 @@ function Home() {
   const [selectedDetails, setSelectedDetails] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
   let numberOfResult = -1;
-  useEffect(() => {
-    console.log(selectedDetails);
-    return () => {};
-  });
+  useEffect(async () => {
+    try {
+      if (pokemon) {
+        data = await getSearchResult(pokemon);
+        if (!selectedDetails) {
+          setSelectedDetails({ ...selectedDetails, ...data });
+          setselected(pokemon);
+          if (!page) {
+            //if no page is selected from query ?page=stats
+            setCurrentPage("STATS");
+          } else {
+            setCurrentPage(page.toUpperCase());
+          }
+        }
+      } else {
+        data = await getSearchResult("ditto"); //defaults to ditto if no pokemon has been chosen
+        setSelectedDetails({ ...selectedDetails, ...data });
+        setCurrentPage("STATS");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   return (
     <React.Fragment>
       <Row className="home-top-row">
         <Col xs={12}>
           <Form inline>
             <Input
+              id="search-btn"
               defaultValue={selected}
               style={{ width: "90%" }}
               onChange={(e) => {
                 console.log(e.target.value);
                 if (searchResults.search !== null) {
                   if (searchResults.search.trim().length < 2) {
-                    console.log("setting nul");
                     setsearchResults({ ...searchResults, search: null });
                   } else {
                     setsearchResults({
                       ...searchResults,
                       search: e.target.value,
+                      displayResults: true,
                     });
                   }
                 } else {
@@ -59,11 +85,13 @@ function Home() {
                   ...searchResults,
                   search: null,
                 });
-                let data = await getSearchResult(selected.toLowerCase()); //enters search result must be lowercase to find anything
+                data = await getSearchResult(selected.toLowerCase()); //enters search result must be lowercase to find anything
                 setSelectedDetails({
                   ...selectedDetails,
                   ...data,
                 });
+                pokemon = selected.toLowerCase();
+                history.push(`/${pokemon}`);
                 setCurrentPage("STATS");
               }}
               color="danger"
@@ -82,10 +110,14 @@ function Home() {
           {searchResults.search !== null &&
           searchResults.displayResults === true
             ? pokemonNames.map((result, i) => {
-                if (result.toLowerCase().includes(searchResults.search)) {
+                if (
+                  result.toLowerCase().includes(searchResults.search.trim())
+                ) {
                   numberOfResult += 1;
                   return (
                     <SearchResult
+                      key={i}
+                      setSearchResults={setsearchResults}
                       setSelected={setselected}
                       name={result}
                       number={numberOfResult}
@@ -111,11 +143,13 @@ function Home() {
           {/* side left panel for navigating pokemon options passes the setcurrentPage state */}
           {currentPage !== null ? (
             <PokemonDetailsSide
+              history={history}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
           ) : (
             <PokemonDetailsSide
+              history={history}
               setCurrentPage={setCurrentPage}
               currentPage="none"
             />
@@ -124,6 +158,10 @@ function Home() {
         <Col className="right-panel" xs={12} md={8}>
           {selectedDetails !== null ? (
             <PokemonDetails
+              games={selectedDetails.data.game_indices}
+              held_items={selectedDetails.data.held_items}
+              abilities={selectedDetails.data.abilities}
+              types={selectedDetails.data.types}
               currentPage={currentPage}
               name={selected}
               image={selectedDetails.data.sprites.front_default}

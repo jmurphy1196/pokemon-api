@@ -18,6 +18,7 @@ function App() {
         <Navbar />
         <Container>
           <Switch>
+            <Route exact path="/login" component={Login} />
             <Route exact path="/" component={Home} />
             <Route exact path="/:pokemon" component={Home} />
           </Switch>
