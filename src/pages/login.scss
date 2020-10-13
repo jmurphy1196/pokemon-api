@@ -1,0 +1,27 @@
+.form-container {
+    height: 80vh;
+    width: 60vw;
+    background-color: white;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading-img {
+    animation: infinite slideRight 6.5s;
+}
+
+@keyframes slideRight {
+    from {
+        margin-right: 0%;
+    }
+    to {
+        margin-right: 800%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .form-container {
+        width: 90vw;
+    }
+}

@@ -23,6 +23,14 @@ p.active {
   text-decoration: underline !important;
   color: black !important;
 }
+@media only screen and (max-width: 450px) {
+  p.side-para {
+    font-size: 0.7rem;
+  }
+  p {
+    font-size: 0.8rem;
+  }
+}
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
@@ -30,4 +38,9 @@ p.active {
 /* Optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
   background-color: grey;
+}
+.fav:hover {
+  i {
+    color: yellow;
+  }
 }

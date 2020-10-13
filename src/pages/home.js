@@ -14,10 +14,13 @@ import { useLocation } from "react-router-dom";
 //add query
 import addQuery from "../util/addQuery";
 import "./home.scss";
+//redux
+import { connect } from "react-redux";
 
 function Home(props) {
   const location = useLocation();
-  const { history } = props;
+  const { history, authenticated } = props;
+
   let searchParams = new URLSearchParams(location.search);
   let page = searchParams.get("page");
   let pokemon = props.match.params.pokemon;
@@ -31,38 +34,41 @@ function Home(props) {
   const [selectedDetails, setSelectedDetails] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
   let numberOfResult = -1;
-  useEffect(async () => {
-    try {
-      if (pokemon) {
-        data = await getSearchResult(pokemon);
+  useEffect(() => {
+    const getPokemon = async () => {
+      try {
+        if (pokemon) {
+          data = await getSearchResult(pokemon);
 
-        if (!selectedDetails) {
+          if (!selectedDetails) {
+            setSelectedDetails({ ...selectedDetails, ...data });
+            setselected(pokemon);
+            if (!page) {
+              //if no page is selected from query ?page=stats
+              setCurrentPage("STATS");
+              addQuery("page", "stats", location, history);
+            } else {
+              setCurrentPage(page.toUpperCase());
+            }
+          }
+        } else {
+          data = await getSearchResult("ditto"); //defaults to ditto if no pokemon has been chosen
+
           setSelectedDetails({ ...selectedDetails, ...data });
-          setselected(pokemon);
+          setCurrentPage("STATS");
+
+          history.push(`/ditto`);
           if (!page) {
-            //if no page is selected from query ?page=stats
-            setCurrentPage("STATS");
             addQuery("page", "stats", location, history);
           } else {
-            setCurrentPage(page.toUpperCase());
+            addQuery("page", page, location, history);
           }
         }
-      } else {
-        data = await getSearchResult("ditto"); //defaults to ditto if no pokemon has been chosen
-
-        setSelectedDetails({ ...selectedDetails, ...data });
-        setCurrentPage("STATS");
-
-        history.push(`/ditto`);
-        if (!page) {
-          addQuery("page", "stats", location, history);
-        } else {
-          addQuery("page", page, location, history);
-        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
+    };
+    getPokemon();
   }, []);
   return (
     <React.Fragment>
@@ -97,11 +103,12 @@ function Home(props) {
             />
             <Button
               onClick={async () => {
+                const searchBtn = document.getElementById("search-btn");
                 setsearchResults({
                   ...searchResults,
                   search: null,
                 });
-                data = await getSearchResult(selected.toLowerCase()); //enters search result must be lowercase to find anything
+                data = await getSearchResult(searchBtn.value.toLowerCase()); //enters search result must be lowercase to find anything
                 setSelectedDetails({
                   ...selectedDetails,
                   ...data,
@@ -176,6 +183,7 @@ function Home(props) {
         <Col className="right-panel" xs={12} md={8}>
           {selectedDetails !== null ? (
             <PokemonDetails
+              number={selectedDetails.data.id}
               games={selectedDetails.data.game_indices}
               held_items={selectedDetails.data.held_items}
               abilities={selectedDetails.data.abilities}
@@ -195,5 +203,9 @@ function Home(props) {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+});
+
+export default connect(mapStateToProps)(Home);
 /* */

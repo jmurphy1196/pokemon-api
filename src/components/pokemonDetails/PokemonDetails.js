@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //stats details
 import StatsDetails from "./StatsDetails";
 //types details
@@ -12,6 +12,9 @@ import GamesDetails from "./GamesDetails";
 //add to favorites
 import AddFavorite from "../favorites/AddFavorite";
 import "./pokemonDetails.scss";
+//redux
+import { connect } from "react-redux";
+import { addFavorite } from "../../redux/actions/dataActions";
 
 //bootstrap
 import { Row, Col, Button } from "reactstrap";
@@ -28,7 +31,11 @@ function PokemonDetails({
   abilities,
   held_items,
   games,
+  number,
 }) {
+  useEffect(() => {
+    image = images[0];
+  });
   const [currentImage, setCurrentImage] = useState(null);
   currentImage === null ? (image = image) : (image = images[currentImage]);
   console.log(stats);
@@ -109,10 +116,12 @@ function PokemonDetails({
         {currentPage === "GAMES" && <GamesDetails games={games} />}
       </Row>
       <Row className="mt-5">
-        <AddFavorite />
+        <AddFavorite name={name} type={types[0]} number={number} />
       </Row>
     </React.Fragment>
   );
 }
-
-export default PokemonDetails;
+const mapStateToProps = (state) => ({
+  favorites: [],
+});
+export default connect(mapStateToProps, { addFavorite })(PokemonDetails);

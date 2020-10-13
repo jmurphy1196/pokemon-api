@@ -1,0 +1,114 @@
+.normal-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #fafafa;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: white;
+  }
+}
+.fire-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #fa8072;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: #ef0107;
+  }
+}
+.grass-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #90ee90;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: #0bda51;
+  }
+}
+.ghost-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #d891ef;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: #df73ff;
+  }
+}
+.poke-image-normal {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: white;
+  &:hover {
+    background-color: #fafafa;
+  }
+}
+.poke-image-fire {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #f88379;
+  &:hover {
+    background-color: #fafafa;
+  }
+}
+.poke-image-ghost {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #dda0dd;
+  &:hover {
+    background-color: #fafafa;
+    transform: scale(1.2);
+  }
+}
+
+.poke-image-grass {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #98fb98;
+  &:hover {
+    background-color: #fafafa;
+  }
+}
+
+.poke-image-fire:hover {
+  transform: scale(1.2);
+}
+.poke-image-grass:hover {
+  transform: scale(1.2);
+}
+.poke-image-normal:hover {
+  transform: scale(1.2);
+}
+p {
+  text-transform: uppercase;
+}
+.favorite-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}

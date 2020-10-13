@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 //router
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import logo from "../../images/pokelogo.png";
-
+//redux
+import { connect } from "react-redux";
+import { logoutUser } from "../../redux/actions/userActions";
 //styles
 import "./navbar.scss";
 
-function Navbar() {
+function Navbar({ history, authenticated, logoutUser }) {
   let loginTimer;
   let delLoginTImer;
   const displayLoginBtn = () => {
@@ -26,7 +28,7 @@ function Navbar() {
     loginBtn.style.position = "absolute";
     loginBtn.style.top = "40%";
     loginBtn.style.bottom = 1;
-    let text = "login";
+    let text = authenticated ? "logout" : "login";
     let i = 1;
     function writeText() {
       if (i > text.length) {
@@ -43,6 +45,7 @@ function Navbar() {
     clearInterval(loginTimer);
     loginTimer = null;
     delLoginTImer = null;
+
     loginTimer = setInterval(writeText, 150);
 
     console.log("set interval");
@@ -53,7 +56,7 @@ function Navbar() {
     let pokeBall = document.getElementById("poke-ball");
     let loginBtn = document.getElementById("login-btn");
     pokeBall.style.transform = "translateX(0) rotate(0)";
-    let text = "Login";
+    let text = authenticated ? "logout" : "login";
     let i = 0;
     let j = 0;
     function delText() {
@@ -69,6 +72,7 @@ function Navbar() {
     clearInterval(delLoginTImer);
     delLoginTImer = null;
     loginTimer = null;
+
     delLoginTImer = setInterval(delText, 125);
   };
 
@@ -95,7 +99,10 @@ function Navbar() {
             {" "}
             <li className="nav-item">Pokemon</li>
           </Link>
-          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+          <Link
+            to="/favorites"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
             {" "}
             <li className="nav-item">My Favorites</li>
           </Link>
@@ -103,6 +110,11 @@ function Navbar() {
 
         <ul className="navbar-nav ml-auto" onMouseLeave={turnOffLoginBtn}>
           <Link
+            onClick={() => {
+              if (authenticated) {
+                logoutUser();
+              }
+            }}
             to="/login"
             style={{ textDecoration: "none", color: "inherit" }}
           >
@@ -123,4 +135,8 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+  authenticated: state.user.authenticated,
+});
+
+export default connect(mapStateToProps, { logoutUser })(Navbar);

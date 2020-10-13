@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Input, Form, Button, Label } from "reactstrap";
-import { loginUser } from "../redux/actions/userActions";
-import { connect } from "react-redux";
-//scss
+import charmander from "../images/charmander.png";
+import ditto from "../images/ditto.png";
+import bulb from "../images/bulb.png";
 import "./login.scss";
-function Login({ history, loginUser, errors }) {
-  let isError = false;
+//redux
+import { connect } from "react-redux";
+import { signupUser } from "../redux/actions/userActions";
+
+function Signup({ history, errors, signupUser }) {
+  let isErrors = false;
   if (errors) {
-    isError = true;
+    isErrors = true;
   }
   let imagesTimer;
   let random1 = Math.floor(Math.random() * 255);
@@ -22,6 +26,7 @@ function Login({ history, loginUser, errors }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   useEffect(() => {
@@ -41,26 +46,27 @@ function Login({ history, loginUser, errors }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await loginUser(formData, history);
+      signupUser(formData, history);
     } catch (err) {
       console.log(err);
     }
   };
 
   const pokeImgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon`;
+
   return (
     <React.Fragment>
       <div className="form-container mt-5">
         <Row>
           <Col xs={12}>
-            <h1 className="text-center">LOGIN</h1>
+            <h1 className="text-center">SIGNUP</h1>
           </Col>
         </Row>
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Row className="mt-5">
             <Col xs={12}>
               <Label>Email:</Label>
-              {isError === false ? (
+              {isErrors === false ? (
                 <Input
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -81,7 +87,7 @@ function Login({ history, loginUser, errors }) {
           <Row className="mt-5">
             <Col xs={12}>
               <Label>Password:</Label>
-              {isError === false ? (
+              {isErrors === false ? (
                 <Input
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
@@ -100,6 +106,33 @@ function Login({ history, loginUser, errors }) {
             </Col>
           </Row>
           <Row className="mt-5">
+            <Col xs={12}>
+              <Label>Confirm:</Label>
+              {isErrors === false ? (
+                <Input
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  type="password"
+                />
+              ) : (
+                <Input
+                  invalid={errors.confirmPassword ? true : false}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  type="password"
+                />
+              )}
+            </Col>
+          </Row>
+          <Row className="mt-5">
             <Col
               xs={12}
               style={{
@@ -109,14 +142,14 @@ function Login({ history, loginUser, errors }) {
               }}
             >
               <Button type="submit" className="text-center">
-                LOGIN
+                SIGNUP
               </Button>
             </Col>
           </Row>
           <Row className="mt-5">
             <Col xs={12}>
               <p className="text-center">
-                Don't have an account? <Link to="/signup">Sign up.</Link>
+                Have an account? <Link to="/login">Log in.</Link>
               </p>
             </Col>
           </Row>
@@ -175,8 +208,7 @@ function Login({ history, loginUser, errors }) {
 }
 
 const mapStateToProps = (state) => ({
-  authenticated: state.user.authenticated,
   errors: state.UI.errors,
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { signupUser })(Signup);
