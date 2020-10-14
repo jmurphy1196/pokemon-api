@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Input, Form, Button, Label } from "reactstrap";
-import charmander from "../images/charmander.png";
-import ditto from "../images/ditto.png";
-import bulb from "../images/bulb.png";
+
 import "./login.scss";
 //redux
 import { connect } from "react-redux";

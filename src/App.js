@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import jwtDecode from "jwt-decode";
-//axios
-import axios from "axios";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 //bootstrap
 import { Container } from "reactstrap";
 //router
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //navbar
 import Navbar from "./components/Nav/Navbar";
 //pages
@@ -30,19 +24,16 @@ import AuthRoute from "./util/AuthRoute";
 
 const token = localStorage.getItem("token");
 
-function App({ history }) {
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      if (decodedToken.exp * 1000 < Date.now()) {
-        store.dispatch(logoutUser());
-      } else {
-        store.dispatch({ type: SET_AUTHENTICATED });
-      }
-    }
-  }, []);
+if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logoutUser());
+  } else {
+    store.dispatch({ type: SET_AUTHENTICATED });
+  }
+}
 
+function App({}) {
   return (
     <React.Fragment>
       <Provider store={store}>

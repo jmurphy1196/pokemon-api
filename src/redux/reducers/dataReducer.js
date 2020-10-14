@@ -1,5 +1,4 @@
-import { act } from "react-dom/test-utils";
-import { GET_FAVORITE_PAGE } from "../types";
+import { GET_FAVORITE_PAGE, SET_FAVORITES } from "../types";
 
 const initialState = {
   favorites: [],
@@ -12,6 +11,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         pageFavorites: [...action.payload],
+      };
+    case SET_FAVORITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
     default:
       return state;

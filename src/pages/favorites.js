@@ -9,7 +9,7 @@ function Favorites({ history, authenticated, getFavorites, favorites }) {
   const [page, setPage] = useState(1);
   useEffect(() => {
     getFavorites();
-  }, []);
+  }, [getFavorites]);
 
   return (
     <React.Fragment>

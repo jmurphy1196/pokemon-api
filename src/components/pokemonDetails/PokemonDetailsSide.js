@@ -23,7 +23,6 @@ function PokemonDetailsSide({ currentPage, setCurrentPage, history }) {
             alignItems: "center",
             justifyContent: "center",
           }}
-          xs={4}
           md={12}
         >
           {currentPage === "STATS" ? (

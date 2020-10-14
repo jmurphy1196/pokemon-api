@@ -1,9 +1,11 @@
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import {
   CLEAR_ERRORS,
   SET_AUTHENTICATED,
   SET_ERRORS,
   SET_UNAUTHENTICATED,
+  SET_FAVORITES,
 } from "../types";
 
 const userURI = process.env.SERVER_URI || `http://localhost:5000`;
@@ -16,6 +18,8 @@ export const loginUser = (formData, history) => {
       localStorage.setItem("token", data.data.token);
       dispatch({ type: SET_AUTHENTICATED });
       dispatch({ type: CLEAR_ERRORS });
+      const decodedToken = jwtDecode(data.data.token);
+      dispatch({ type: SET_FAVORITES, payload: decodedToken.favorites });
       history.push("/");
     } else {
       dispatch({ type: SET_ERRORS, payload: data.data.errors });

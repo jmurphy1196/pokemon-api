@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Col, Button } from "reactstrap";
+import React from "react";
+import { Col } from "reactstrap";
 import "./pokemonDetails.scss";
 
 function GamesDetails({ games }) {
-  useEffect(() => {
-    const gameContainer = document.getElementById("game-container"); //TODO add swipe controls
-  });
-
   return (
     <React.Fragment>
       <div
@@ -19,9 +15,9 @@ function GamesDetails({ games }) {
           overflowX: "scroll",
         }}
       >
-        {games.map((game) => {
+        {games.map((game, i) => {
           return (
-            <Col xs={4}>
+            <Col key={i} xs={4}>
               <p style={{ textTransform: "uppercase" }} className="text-center">
                 {game.version.name}
               </p>

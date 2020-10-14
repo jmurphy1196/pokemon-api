@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
-import { Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Col } from "reactstrap";
 import "./myFavorite.scss";
-import poke from "../../images/ditto.png";
-import poke2 from "../../images/charmander.png";
-import poke3 from "../../images/bulb.png";
 
 //redux
 import { connect } from "react-redux";
@@ -30,6 +26,7 @@ function MyFavorite({ authenticated, type, name, number }) {
             {`${name}`}
           </p>
           <img
+            alt="pokemon "
             className={`poke-image-${type}`}
             onClick={() => {
               let lowerCaseName = name.toLowerCase();

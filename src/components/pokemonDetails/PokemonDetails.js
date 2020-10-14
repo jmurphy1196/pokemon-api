@@ -73,7 +73,7 @@ function PokemonDetails({
           >
             <i className="fa fa-arrow-left"></i>
           </Button>
-          <img src={image} style={{ width: "30%" }} />
+          <img alt="pokemon" src={image} style={{ width: "30%" }} />
           <Button
             onClick={() => {
               let i = 0;

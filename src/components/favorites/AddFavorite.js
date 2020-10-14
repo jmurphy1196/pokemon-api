@@ -22,7 +22,23 @@ function AddFavorite({
     });
   };
 
+  let isAdded = false;
+
+  if (favorites.length) {
+    //check for user favorites, if it is added do not re add
+    favorites.forEach((fav) => {
+      let favName = fav.name.toLowerCase();
+      let compare = name || "ditto";
+      if (favName.includes(compare.toLowerCase())) {
+        isAdded = true;
+      }
+    });
+  }
+
   let favoriteText = isFavorite ? "ADDED TO FAVORITES" : "ADD TO MY FAVORITES";
+  if (isAdded) {
+    favoriteText = "Added to Favorites";
+  }
   return (
     <React.Fragment>
       <Col xs={12} className="mt-5">

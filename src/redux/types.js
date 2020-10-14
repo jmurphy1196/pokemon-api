@@ -12,3 +12,4 @@ export const STOP_LOADING_UI = "STOP_LOADING_UI";
 //data
 export const GET_FAVORITE_PAGE = "GET_FAVORITE_PAGE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
+export const SET_FAVORITES = "SET_FAVORITES";

@@ -16,10 +16,11 @@ import addQuery from "../util/addQuery";
 import "./home.scss";
 //redux
 import { connect } from "react-redux";
+import { setFavorites } from "../redux/actions/dataActions";
 
 function Home(props) {
   const location = useLocation();
-  const { history, authenticated } = props;
+  const { history, authenticated, setFavorites } = props;
 
   let searchParams = new URLSearchParams(location.search);
   let page = searchParams.get("page");
@@ -30,6 +31,7 @@ function Home(props) {
     search: null,
     displayResults: true,
   });
+  const [error_poke, setError_poke] = useState(false);
   const [selected, setselected] = useState(null);
   const [selectedDetails, setSelectedDetails] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
@@ -37,10 +39,14 @@ function Home(props) {
   useEffect(() => {
     const getPokemon = async () => {
       try {
+        if (authenticated) {
+          console.log("getting user favorites...");
+          setFavorites();
+        }
         if (pokemon) {
           data = await getSearchResult(pokemon);
 
-          if (!selectedDetails) {
+          if (!selectedDetails && data.data.id) {
             setSelectedDetails({ ...selectedDetails, ...data });
             setselected(pokemon);
             if (!page) {
@@ -50,6 +56,8 @@ function Home(props) {
             } else {
               setCurrentPage(page.toUpperCase());
             }
+          } else {
+            setError_poke(true);
           }
         } else {
           data = await getSearchResult("ditto"); //defaults to ditto if no pokemon has been chosen
@@ -70,11 +78,39 @@ function Home(props) {
     };
     getPokemon();
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const searchBtn = document.getElementById("search-btn");
+    setsearchResults({
+      ...searchResults,
+      search: null,
+    });
+    data = await getSearchResult(searchBtn.value.toLowerCase()); //enters search result must be lowercase to find anything
+    console.log(data);
+    if (data) {
+      if (error_poke) {
+        setError_poke(false); //set to false if found pokemon
+      }
+      setSelectedDetails({
+        ...selectedDetails,
+        ...data,
+      });
+      pokemon = searchBtn.value.toLowerCase();
+
+      setCurrentPage("STATS");
+      pokemon = searchBtn.value.toLowerCase();
+      history.push(`/${pokemon}`);
+    } else {
+      //found no pokemon
+      setError_poke(true);
+    }
+  };
   return (
     <React.Fragment>
       <Row className="home-top-row">
         <Col xs={12}>
-          <Form inline>
+          <Form inline onSubmit={(e) => handleSubmit(e)}>
             <Input
               id="search-btn"
               defaultValue={selected}
@@ -102,23 +138,7 @@ function Home(props) {
               placeholder="Search a pokemon!"
             />
             <Button
-              onClick={async () => {
-                const searchBtn = document.getElementById("search-btn");
-                setsearchResults({
-                  ...searchResults,
-                  search: null,
-                });
-                data = await getSearchResult(searchBtn.value.toLowerCase()); //enters search result must be lowercase to find anything
-                setSelectedDetails({
-                  ...selectedDetails,
-                  ...data,
-                });
-                pokemon = selected.toLowerCase();
-
-                setCurrentPage("STATS");
-                pokemon = selected.toLowerCase();
-                history.push(`/${pokemon}`);
-              }}
+              type="submit"
               color="danger"
               style={{
                 width: "10%",
@@ -181,7 +201,7 @@ function Home(props) {
           )}
         </Col>
         <Col className="right-panel" xs={12} md={8}>
-          {selectedDetails !== null ? (
+          {selectedDetails !== null && error_poke === false ? (
             <PokemonDetails
               number={selectedDetails.data.id}
               games={selectedDetails.data.game_indices}
@@ -189,14 +209,16 @@ function Home(props) {
               abilities={selectedDetails.data.abilities}
               types={selectedDetails.data.types}
               currentPage={currentPage}
-              name={selected}
+              name={selectedDetails.data.species.name}
               image={selectedDetails.data.sprites.front_default}
               images={selectedDetails.data.images}
               stats={selectedDetails.data.stats}
               height={selectedDetails.data.height}
               weight={selectedDetails.data.weight}
             />
-          ) : null}
+          ) : (
+            <h1>NO SEARCH RESULT FOUND</h1>
+          )}
         </Col>
       </Row>
     </React.Fragment>
@@ -207,5 +229,5 @@ const mapStateToProps = (state) => ({
   authenticated: state.user.authenticated,
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { setFavorites })(Home);
 /* */

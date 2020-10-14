@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 //router
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../../images/pokelogo.png";
 //redux
 import { connect } from "react-redux";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
+
 import { Col, Row } from "reactstrap";
 import "./searchResults.scss";
 

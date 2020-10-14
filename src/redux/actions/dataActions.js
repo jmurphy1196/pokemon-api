@@ -1,5 +1,6 @@
 import axios from "axios";
-import { GET_FAVORITE_PAGE, ADD_FAVORITE } from "../types";
+import jwtDecode from "jwt-decode";
+import { GET_FAVORITE_PAGE, SET_FAVORITES } from "../types";
 
 const URI = process.env.SERVER_URI || `http://localhost:5000`;
 
@@ -35,5 +36,13 @@ export const addFavorite = (pokeData) => {
     } catch (err) {
       console.log(err);
     }
+  };
+};
+
+export const setFavorites = () => {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    const decodedToken = jwtDecode(token);
+    dispatch({ type: SET_FAVORITES, payload: decodedToken.favorites });
   };
 };

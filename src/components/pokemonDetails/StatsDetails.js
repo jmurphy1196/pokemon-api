@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Row, Col } from "reactstrap";
+import { Col } from "reactstrap";
 
 function StatsDetails({ stats }) {
   return (

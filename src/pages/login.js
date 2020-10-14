@@ -10,7 +10,7 @@ function Login({ history, loginUser, errors }) {
   if (errors) {
     isError = true;
   }
-  let imagesTimer;
+
   let random1 = Math.floor(Math.random() * 255);
   let random2 = Math.floor(Math.random() * 255);
   let random3 = Math.floor(Math.random() * 255);
@@ -25,6 +25,7 @@ function Login({ history, loginUser, errors }) {
   });
 
   useEffect(() => {
+    let imagesTimer;
     imagesTimer = setInterval(() => {
       setImages({
         ...setImages,
@@ -41,7 +42,7 @@ function Login({ history, loginUser, errors }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await loginUser(formData, history);
+      await loginUser(formData, history);
     } catch (err) {
       console.log(err);
     }
@@ -138,6 +139,7 @@ function Login({ history, loginUser, errors }) {
             }}
           >
             <img
+              alt="pokemon"
               className="loading-img"
               src={`${pokeImgUrl}/${images.random1}.png`}
             />
@@ -151,6 +153,7 @@ function Login({ history, loginUser, errors }) {
             xs={4}
           >
             <img
+              alt="pokemon"
               className="loading-img"
               src={`${pokeImgUrl}/${images.random2}.png`}
             />
@@ -164,6 +167,7 @@ function Login({ history, loginUser, errors }) {
             xs={4}
           >
             <img
+              alt="pokemon"
               className="loading-img"
               src={`${pokeImgUrl}/${images.random3}.png`}
             />

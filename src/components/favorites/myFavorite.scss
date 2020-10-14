@@ -11,6 +11,19 @@
     background-color: white;
   }
 }
+.electric-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #fcffa4;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: #ffff66;
+  }
+}
 .fire-col {
   cursor: pointer;
   background-color: white;
@@ -35,6 +48,19 @@
 
   &:hover {
     background-color: #0bda51;
+  }
+}
+.bug-col {
+  cursor: pointer;
+  background-color: white;
+  border: solid black;
+  position: relative;
+  bottom: 20%;
+  background-color: #e9ffdb;
+  padding-left: 2px;
+
+  &:hover {
+    background-color: #98ff98;
   }
 }
 .ghost-col {
@@ -90,6 +116,29 @@
   background-color: #98fb98;
   &:hover {
     background-color: #fafafa;
+  }
+}
+.poke-image-bug {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #ace1af;
+  &:hover {
+    background-color: #fafafa;
+    transform: scale(1.2);
+  }
+}
+
+.poke-image-electric {
+  transition: 0.5s ease;
+  border: solid black;
+  border-radius: 50%;
+  width: 50%;
+  background-color: #fffdd0;
+  &:hover {
+    background-color: #fafafa;
+    transform: scale(1.2);
   }
 }
 
