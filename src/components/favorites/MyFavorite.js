@@ -5,7 +5,7 @@ import "./myFavorite.scss";
 //redux
 import { connect } from "react-redux";
 
-function MyFavorite({ authenticated, type, name, number }) {
+function MyFavorite({ authenticated, type, name, number, history }) {
   return (
     <React.Fragment>
       <Col className={`${type}-col`} xs={12} md={12}>
@@ -30,7 +30,7 @@ function MyFavorite({ authenticated, type, name, number }) {
             className={`poke-image-${type}`}
             onClick={() => {
               let lowerCaseName = name.toLowerCase();
-              window.location = `/${lowerCaseName}`;
+              history.push(`/${lowerCaseName}`);
             }}
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`}
           />

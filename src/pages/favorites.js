@@ -47,6 +47,7 @@ function Favorites({ history, authenticated, getFavorites, favorites }) {
                 }}
               >
                 <MyFavorite
+                  history={history}
                   type={favorite.type}
                   number={favorite.number}
                   name={favorite.name}
