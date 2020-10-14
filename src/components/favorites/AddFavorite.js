@@ -46,8 +46,12 @@ function AddFavorite({
         <div
           onClick={() => {
             if (authenticated) {
-              handleAddFavorite();
-              setIsFavorite(true);
+              if (isAdded) {
+                history.push("/favorites");
+              } else {
+                handleAddFavorite();
+                setIsFavorite(true);
+              }
             } else {
               history.push("/login");
             }
