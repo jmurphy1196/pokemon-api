@@ -2,7 +2,7 @@ import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { GET_FAVORITE_PAGE, SET_FAVORITES } from "../types";
 
-const URI = process.env.SERVER_URI || `http://localhost:5000`;
+const URI = process.env.SERVER_URI || `https://poke-backend-v1.herokuapp.com`;
 
 export const getFavorites = (page = 1) => {
   const token = localStorage.getItem("token");

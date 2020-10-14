@@ -8,7 +8,8 @@ import {
   SET_FAVORITES,
 } from "../types";
 
-const userURI = process.env.SERVER_URI || `http://localhost:5000`;
+const userURI =
+  process.env.SERVER_URI || `https://poke-backend-v1.herokuapp.com`;
 
 export const loginUser = (formData, history) => {
   return async (dispatch) => {
