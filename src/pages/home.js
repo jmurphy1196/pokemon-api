@@ -203,6 +203,7 @@ function Home(props) {
         <Col className="right-panel" xs={12} md={8}>
           {selectedDetails !== null && error_poke === false ? (
             <PokemonDetails
+              history={history}
               number={selectedDetails.data.id}
               games={selectedDetails.data.game_indices}
               held_items={selectedDetails.data.held_items}

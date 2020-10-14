@@ -12,6 +12,7 @@ function AddFavorite({
   name,
   type,
   number,
+  history,
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const handleAddFavorite = () => {
@@ -48,7 +49,7 @@ function AddFavorite({
               handleAddFavorite();
               setIsFavorite(true);
             } else {
-              window.location.href = "/login";
+              history.push("/login");
             }
           }}
           style={{

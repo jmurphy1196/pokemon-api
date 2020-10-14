@@ -32,6 +32,7 @@ function PokemonDetails({
   held_items,
   games,
   number,
+  history,
 }) {
   useEffect(() => {
     image = images[0];
@@ -116,7 +117,12 @@ function PokemonDetails({
         {currentPage === "GAMES" && <GamesDetails games={games} />}
       </Row>
       <Row className="mt-5">
-        <AddFavorite name={name} type={types[0]} number={number} />
+        <AddFavorite
+          history={history}
+          name={name}
+          type={types[0]}
+          number={number}
+        />
       </Row>
     </React.Fragment>
   );
