@@ -26,6 +26,8 @@ function Home(props) {
   let page = searchParams.get("page");
   let pokemon = props.match.params.pokemon;
   let data;
+  let searchBtn = null;
+
   console.log(`this is the pokemon ${pokemon}`);
   const [searchResults, setsearchResults] = useState({
     search: null,
@@ -37,6 +39,8 @@ function Home(props) {
   const [currentPage, setCurrentPage] = useState(null);
   let numberOfResult = -1;
   useEffect(() => {
+    searchBtn = document.getElementById("search-btn");
+    console.log(searchBtn);
     const getPokemon = async () => {
       try {
         if (authenticated) {
@@ -80,8 +84,8 @@ function Home(props) {
   }, []);
 
   const handleSubmit = async (e) => {
+    searchBtn = document.getElementById("search-btn");
     e.preventDefault();
-    const searchBtn = document.getElementById("search-btn");
     setsearchResults({
       ...searchResults,
       search: null,
@@ -138,6 +142,9 @@ function Home(props) {
               placeholder="Search a pokemon!"
             />
             <Button
+              disabled={
+                searchBtn !== null && searchBtn.value.length > 0 ? true : false
+              }
               type="submit"
               color="danger"
               style={{
@@ -201,7 +208,9 @@ function Home(props) {
           )}
         </Col>
         <Col className="right-panel" xs={12} md={8}>
-          {selectedDetails !== null && error_poke === false ? (
+          {selectedDetails !== null &&
+          error_poke === false &&
+          selectedDetails.data.species ? (
             <PokemonDetails
               history={history}
               number={selectedDetails.data.id}

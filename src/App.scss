@@ -7,12 +7,11 @@ body {
   overflow-x: hidden;
 }
 .main-container {
-  position: absolute;
-  margin-left: 20%;
+  position: relative;
 }
+.primary-container {
+  display: flex;
 
-@media only screen and (max-width: 600px) {
-  .main-container {
-    margin-left: 0%;
-  }
+  align-items: center;
+  justify-content: center;
 }

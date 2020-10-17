@@ -39,15 +39,17 @@ function App({}) {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <Container className="main-container">
-            <Switch>
-              <AuthRoute exact path="/favorites" component={Favorites} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <Route exact path="/" component={Home} />
-              <Route path="/:pokemon" component={Home} />
-            </Switch>
-          </Container>
+          <div className="primary-container">
+            <Container className="main-container">
+              <Switch>
+                <AuthRoute exact path="/favorites" component={Favorites} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/" component={Home} />
+                <Route path="/:pokemon" component={Home} />
+              </Switch>
+            </Container>
+          </div>
         </Router>
       </Provider>
     </React.Fragment>
