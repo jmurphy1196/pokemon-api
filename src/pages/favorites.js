@@ -14,13 +14,11 @@ function Favorites({ history, authenticated, getFavorites, favorites }) {
   return (
     <React.Fragment>
       <Row
-        className="mt-5"
         style={{
           backgroundColor: "white",
           minHeight: "80vh",
           height: "fit-content",
           position: "absolute",
-          width: "100%",
         }}
       >
         <Col

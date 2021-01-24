@@ -8,15 +8,13 @@
   border-right: solid black 1px;
 
   background-color: #fafafa;
-  height: 80vh;
 }
 .right-panel {
   background-color: #fafafa;
-  height: 80vh;
 }
 
 @media only screen and (max-width: 450px) {
   .left-panel {
-    height: 20vh;
+    padding-top: 10px;
   }
 }
