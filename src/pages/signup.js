@@ -27,19 +27,7 @@ function Signup({ history, errors, signupUser }) {
     confirmPassword: "",
   });
 
-  useEffect(() => {
-    imagesTimer = setInterval(() => {
-      setImages({
-        ...setImages,
-        random1: Math.floor(Math.random() * 255),
-        random2: Math.floor(Math.random() * 255),
-        random3: Math.floor(Math.random() * 255),
-      });
-    }, 6300);
-    return () => {
-      clearInterval(imagesTimer);
-    };
-  }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +42,7 @@ function Signup({ history, errors, signupUser }) {
 
   return (
     <React.Fragment>
-      <div className="form-container mt-5">
+      <div className="form-container ">
         <Row>
           <Col xs={12}>
             <h1 className="text-center">SIGNUP</h1>
@@ -151,56 +139,26 @@ function Signup({ history, errors, signupUser }) {
               </p>
             </Col>
           </Row>
-        </Form>
-        <Row
-          style={{
-            position: "absolute",
-            top: "80%",
-
-            width: "100%",
-          }}
-        >
-          <Col
-            xs={4}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <img
-              className="loading-img"
+        </Form> 
+        <div className='poke-container'>
+              <img
+              alt="pokemon"
+              className="loading-img loading-img--1"
               src={`${pokeImgUrl}/${images.random1}.png`}
             />
-          </Col>
-          <Col
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            xs={4}
-          >
             <img
-              className="loading-img"
+              alt="pokemon"
+              className="loading-img loading-img--2"
               src={`${pokeImgUrl}/${images.random2}.png`}
             />
-          </Col>
-          <Col
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            xs={4}
-          >
             <img
-              className="loading-img"
+              alt="pokemon"
+              className="loading-img loading-img--3"
               src={`${pokeImgUrl}/${images.random3}.png`}
             />
-          </Col>
-        </Row>
-      </div>
+        </div>
+
+             </div>
     </React.Fragment>
   );
 }

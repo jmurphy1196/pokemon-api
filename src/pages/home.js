@@ -127,14 +127,14 @@ function Home(props) {
                   } else {
                     setsearchResults({
                       ...searchResults,
-                      search: e.target.value,
+                      search: e.target.value.toLowerCase(),
                       displayResults: true,
                     });
                   }
                 } else {
                   setsearchResults({
                     ...searchResults,
-                    search: e.target.value,
+                    search: e.target.value.toLowerCase(),
                   });
                 }
               }}

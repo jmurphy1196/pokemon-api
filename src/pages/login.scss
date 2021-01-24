@@ -1,27 +1,51 @@
 .form-container {
-    height: 80vh;
-    width: 60vw;
-    background-color: white;
-    padding: 0 2rem;
-    position: relative;
-    overflow: hidden;
+  background-color: white;
+  padding: 0 2rem;
+  position: relative;
+  overflow: hidden;
+  padding: 5rem;
+  padding-bottom: 10rem;
 }
 
 .loading-img {
-    animation: infinite slideRight 6.5s;
+  animation: infinite slideRight 8s;
+  &--1 {
+    animation-delay: 0s;
+  }
+  &--2 {
+    animation-delay: 2s;
+  }
+  &--3 {
+    animation-delay: 4s;
+  }
+}
+.poke-container {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 @keyframes slideRight {
-    from {
-        margin-right: 0%;
-    }
-    to {
-        margin-right: 800%;
-    }
+  0% {
+    transform: translate(0%, 0%);
+  }
+  50% {
+    transform: translate(-100vw, 0%);
+  }
+  51% {
+    transform: translate(100vw, 0%);
+  }
+  100% {
+    transform: translate(-20%, 0%);
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .form-container {
-        width: 90vw;
-    }
+  .form-container {
+    width: 90vw;
+  }
 }
