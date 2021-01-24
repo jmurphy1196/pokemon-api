@@ -39,7 +39,6 @@ function App({}) {
       <Provider store={store}>
         <Router>
           <Navbar />
-          <div className="primary-container">
             <Container className="main-container">
               <Switch>
                 <AuthRoute exact path="/favorites" component={Favorites} />
@@ -49,7 +48,7 @@ function App({}) {
                 <Route path="/:pokemon" component={Home} />
               </Switch>
             </Container>
-          </div>
+         
         </Router>
       </Provider>
     </React.Fragment>

@@ -112,7 +112,7 @@ function Home(props) {
   };
   return (
     <React.Fragment>
-      <Row className="home-top-row">
+      <Row className="home-top-row ">
         <Col xs={12}>
           <Form inline onSubmit={(e) => handleSubmit(e)}>
             <Input
